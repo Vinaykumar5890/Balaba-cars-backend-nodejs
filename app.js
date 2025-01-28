@@ -142,6 +142,29 @@ app.get('/vehicle-owner/:id', authenticateToken, async (req, res) => {
   }
 })
 
+// put Updating Seats by user Book Car By Id
+app.put('/vehicle-owner/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const vehicle = await Vehicleowner.findById(id);
+
+    if (!vehicle) {
+      return res.status(404).send('Vehicle not found');
+    }
+    if (vehicle.seats <= 0) {
+      return res.status(400).send('No seats available to decrement');
+    }
+    vehicle.seats -= 1;
+    await vehicle.save();
+
+    return res.status(200).json(vehicle);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send('Internal Server Error');
+  }
+});
+
+
 app.listen(3000, () => {
   console.log('Server Running.....')
 })
