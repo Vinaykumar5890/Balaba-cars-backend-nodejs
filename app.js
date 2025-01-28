@@ -103,7 +103,7 @@ app.post('/login', async (req, res) => {
 
 /// Vehicle Owner Details with Post Method
 
-app.post('/vehicle-owner', authenticateToken, async (req, res) => {
+app.post('/vehicle-owner', async (req, res) => {
   const {carname, seats, priceforseat, fromaddress, toaddress} = req.body
   try {
     const newData = new Vehicleowner({
